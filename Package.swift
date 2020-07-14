@@ -18,7 +18,8 @@ let package = Package(
     targets: [
         .target(
             name: "ScreenshotableView",
-            dependencies: []),
+            dependencies: [],
+            path: "Sources"),
         .testTarget(
             name: "ScreenshotableViewTests",
             dependencies: [

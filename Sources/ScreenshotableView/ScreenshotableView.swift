@@ -12,14 +12,20 @@ public struct ScreenshotableView<Content: View>: View {
         self.completed = completed
         self.content = content()
     }
-
+    
     public var body: some View {
-        if self.shotting {
-            DispatchQueue.main.async {
-                let screenshot = self.content.takeScreenshot(afterScreenUpdates: true)
-                self.completed(screenshot)
+        
+        func internalView(proxy: GeometryProxy) -> some View {
+            if self.shotting {
+                let frame = proxy.frame(in: .global)
+                DispatchQueue.main.async {
+                    let screenshot = self.content.takeScreenshot(frame: frame, afterScreenUpdates: true)
+                    self.completed(screenshot)
+                }
             }
+            return Color.clear
         }
-        return content
+        
+        return content.background(GeometryReader(content: internalView(proxy:)))
     }
 }

@@ -9,17 +9,16 @@ import SwiftUI
 import UIKit
 
 public extension View {
-    public func takeScreenshot(afterScreenUpdates: Bool) -> UIImage {
+    func takeScreenshot(frame:CGRect, afterScreenUpdates: Bool) -> UIImage {
         let hosting = UIHostingController(rootView: self)
         hosting.overrideUserInterfaceStyle = UIApplication.shared.windows.first?.overrideUserInterfaceStyle ?? UIUserInterfaceStyle.unspecified
-        hosting.view.sizeToFit()
+        hosting.view.frame = frame
         return hosting.view.takeScreenshot(afterScreenUpdates: afterScreenUpdates)
     }
 }
 
 public extension UIView {
-    
-    public func takeScreenshot() -> UIImage {
+    func takeScreenshot() -> UIImage {
         UIGraphicsBeginImageContextWithOptions(self.bounds.size, self.isOpaque, 0)
         self.layer.render(in: UIGraphicsGetCurrentContext()!)
         let snapshot = UIGraphicsGetImageFromCurrentImageContext()
@@ -27,7 +26,7 @@ public extension UIView {
         return snapshot!
     }
     
-    public func takeScreenshot(afterScreenUpdates: Bool) -> UIImage {
+    func takeScreenshot(afterScreenUpdates: Bool) -> UIImage {
         if !self.responds(to: #selector(drawHierarchy(in:afterScreenUpdates:))) {
             return self.takeScreenshot()
         }

@@ -31,8 +31,7 @@ public extension UIView {
             return self.takeScreenshot()
         }
         UIGraphicsBeginImageContextWithOptions(self.bounds.size, self.isOpaque, 0)
-        let draw = self.drawHierarchy(in: self.bounds, afterScreenUpdates: afterScreenUpdates)
-        print(draw)
+        self.drawHierarchy(in: self.bounds, afterScreenUpdates: afterScreenUpdates)
         let snapshot = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
         return snapshot!

@@ -4,10 +4,10 @@ import UIKit
 
 public struct ScreenshotableView<Content: View>: View {
     @Binding var shotting: Bool
-    var completed: (UIImage) -> Void
+    var completed: (UIImage?) -> Void
     let content: Content
     
-    public init(shotting:Binding<Bool>, completed: @escaping (UIImage) -> Void, @ViewBuilder content: () -> Content) {
+    public init(shotting:Binding<Bool>, completed: @escaping (UIImage?) -> Void, @ViewBuilder content: () -> Content) {
         self._shotting = shotting
         self.completed = completed
         self.content = content()
